@@ -1,4 +1,5 @@
 import java.io.Console;
+import java.util.*;
 
 /**
  * Assignment 1 - Guessing Game
@@ -34,10 +35,12 @@ public class Guesser {
    * rules() method, next the doGuesses() method.
    */
   public void start() {
-    // call the rules method here
-    rules();
-    // call the doGuesses() method here
-    doGuesses();
+    try (Scanner scanner = new Scanner(System.in)) {
+      // call the rules method here
+      rules();
+      // call the doGuesses() method here
+      doGuesses(scanner);
+    }
   }
 
   private void rules() {
@@ -58,16 +61,25 @@ public class Guesser {
    * a valid reply. Return the String that you read from
    * the player.
    */
-  private String getReply() {
+  private String getReply(Scanner scanner) {
     String reply = null;
     // Write code here which reads a String from the console.
-    // As long as it is not a valid reply (one of "T" and "F")
-    // write an error message, and read a new reply.
-    // When you have gotten a valid reply, return it.
-    return reply;
-  }
 
-  private void doGuesses() {
+    reply = scanner.nextLine().trim();
+
+    while (!reply.equalsIgnoreCase("T") && !reply.equalsIgnoreCase("F")) {
+      System.out.println("Must be T or F!");
+      reply = scanner.nextLine().trim();
+    }
+
+    return reply;
+
+  }
+  // As long as it is not a valid reply (one of "T" and "F")
+  // write an error message, and read a new reply.
+  // When you have gotten a valid reply, return it.
+
+  private void doGuesses(Scanner scanner) {
     int i = 0; // number of guesses
     int middle = 0;
     while (low < high) {
@@ -77,8 +89,8 @@ public class Guesser {
 
       System.out.println("Is the number less than or equal to " +
           middle + "?");
-      String reply = getReply();
-      if ("T".equals(reply)) {
+      String reply = getReply(scanner);
+      if ("T".equalsIgnoreCase(reply)) {
         // The number is less than or equal to middle
         // so we move down high to middle
         high = middle;
