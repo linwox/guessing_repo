@@ -1,0 +1,60 @@
+Betyg jag siktar på: VG
+
+När använder man add respektive commit?
+    Add använder man när man ska lägga till en fil man ändrat till staging area. Commit
+    använder man för att spara ändringen till git-repositoriet. Man behöver lägga till 
+    en kommentar till sin commit som beskriver vad man ändrat.
+
+Vad är pull respektive push?
+    Pull är när man hämtar den senaste versionen av remote repositoriet.
+    Push är när man lägger upp sina lokala ändringar till remote repositoriet.
+
+När använder man log respektive status?
+    Log använder man för att se historiken av commits. Man kan lägga till flaggan 
+    --Oneline för att se en kortare sammanfattning.
+    Status använder man för att se om det finns några ändrade filer att lägga till
+    i staging area eller ändringar att commita.
+
+Vad är en Git branch och varför är de viktiga?
+    En branch är en sidogren till master branch där man kan göra ändringar utan att de
+    påverkar master branch. Om man vill lägga till de nya ändringarna till huvudgrenen
+    kan man mergea dem, men om man ångrar sig och vill behålla filerna så som de är 
+    på master så kan man bara låta bli merge.
+    Branches är viktiga eftersom de låter en eller flera personer arbeta vidare i de
+    filer som finns i master branch utan att det påverkar dem, det blir en säker
+    miljö att testa saker i.
+
+VG-frågor:
+
+Det finns flera sätt att rulla tillbaka koden till ett tidigare tillstånd.
+Förklara skillnaden och motivera när man skulle använda den ena eller andra metoden.
+Ge exempel på de kommandon du använder för att göra detta och visa att det fungerar,
+vilken output du fick från git-kommandona.
+
+Två sätt att rulla tillbaka koden är med git reset och git revert.
+
+Git reset har tre olika lägen där man kan välja hur stor påverkan kommandot ska få:
+
+1. git reset --hard HEAD~1 - raderar ut allt som hänt efter den näst sista commiten,
+   dvs att commiten försvinner, att jag addade till staging area försvinner och
+   ändringen jag gjorde i filen försvinner. Det går inte att få tillbaka.
+   Exempel: Jag hade en readme.txt som jag gjorde en ändring i men sedan ångrade
+   jag mig och ville helt gå tillbaka till hur den var innan.
+
+2. git reset HEAD~1 (kallas standard eller mixed) - tar bort den senaste commiten
+   och tar bort ändringen från staging area. Ändringen i filen finns kvar.
+   Exempel: Jag hade commitat min readme.txt men hade glömt skriva en viktig sak i den
+   så jag backade, la till text och gjorde om add och commit.
+
+
+3. git reset --soft HEAD~1 - tar bort den senaste commiten
+   men ändringen ligger kvar i staging area.
+   Exempel: Jag hade skrivit en otydlig kommentar i min commit så jag backade och 
+   gjorde om commiten med en bättre kommentar.
+
+Git revert är mindre ingripande än reset. Då behåller man commit-historiken men använder
+en tidigare commit som sin senaste.
+Exempel: Jag vill att arbetsprocessen ska finnas kvar men den senaste ändringen jag
+gjorde blev inte bra. Jag kör kommandot git revert HEAD~1 och nu är det den näst senaste
+commiten som är min senaste. Den som var den senaste innan ligger kvar som näst sista 
+commit och jag kan fortfarande gå tillbaka till den om jag skulle ångra mig.
